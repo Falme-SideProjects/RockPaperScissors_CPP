@@ -77,9 +77,9 @@ int GetPlayerInput()
 
 	CheckValidInput();
 
-	while (!(input > 0 && input < 4))
+	while (!(input > 0 && input < 5))
 	{
-		std::cout << "Inputted wrong values, only 1 to 3 is acceptable" << std::endl;
+		std::cout << "Inputted wrong values, only 1 to 4 is acceptable" << std::endl;
 		std::cin >> input;
 		CheckValidInput();
 	}
@@ -87,9 +87,9 @@ int GetPlayerInput()
 	return input;
 }
 
-int main()
+bool GameRound()
 {
-	srand(time(NULL));
+	system("CLS");
 
 	std::cout << "=============================================" << std::endl;
 	std::cout << "||                                         ||" << std::endl;
@@ -99,11 +99,13 @@ int main()
 	std::cout << "||   1 -> ROCK                             ||" << std::endl;
 	std::cout << "||   2 -> PAPER                            ||" << std::endl;
 	std::cout << "||   3 -> SCISSORS                         ||" << std::endl;
+	std::cout << "||   4 -> EXIT                             ||" << std::endl;
 	std::cout << "||                                         ||" << std::endl;
 	std::cout << "=============================================" << std::endl;
 
 	int input = GetPlayerInput();
 	
+	if (input == 4) return false;
 
 	PlayerMove actionOne = GetResult(input);
 	PlayerMove actionTwo = GetResult(GetRandomInteger());
@@ -111,6 +113,19 @@ int main()
 	std::cout << "\n" << actionOne.moveName << " X " << actionTwo.moveName << "\n" << std::endl;
 	std::cout << "RESULT : " << GetVersusResult(actionOne, actionTwo) << "\n" << std::endl;
 
+	system("pause");
+
+	return true;
+}
+
+int main()
+{
+	srand(time(NULL));
+
+	bool isPlaying = true;
+
+	while (isPlaying) isPlaying = GameRound();
+	
 	system("pause");
 	return 0;
 }
