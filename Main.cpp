@@ -20,13 +20,13 @@ int GetRandomInteger()
 	return (rand() % 3 + 1);
 }
 
-PlayerMove GetRandomResult()
+PlayerMove GetResult(int value)
 {
 	std::string result;
 
 	PlayerMove playerMove;
 
-	switch (GetRandomInteger())
+	switch (value)
 	{
 		case 1:
 			playerMove.moveName = ROCK;
@@ -67,10 +67,25 @@ int main()
 	std::cout << "||                                         ||" << std::endl;
 	std::cout << "||          Rock, Paper, Scissors          ||" << std::endl;
 	std::cout << "||                                         ||" << std::endl;
+	std::cout << "|| Input the Number to Play:               ||" << std::endl;
+	std::cout << "||   1 -> ROCK                             ||" << std::endl;
+	std::cout << "||   2 -> PAPER                            ||" << std::endl;
+	std::cout << "||   3 -> SCISSORS                         ||" << std::endl;
+	std::cout << "||                                         ||" << std::endl;
 	std::cout << "=============================================" << std::endl;
 
-	PlayerMove actionOne = GetRandomResult();
-	PlayerMove actionTwo = GetRandomResult();
+	int input;
+	std::cin >> input;
+
+	if (!(input > 0 && input < 4))
+	{
+		std::cout << "Inputted wrong values, only 1 to 3 is acceptable" << std::endl;
+		system("pause");
+		return 0;
+	}
+
+	PlayerMove actionOne = GetResult(input);
+	PlayerMove actionTwo = GetResult(GetRandomInteger());
 
 	std::cout << "\n" << actionOne.moveName << " X " << actionTwo.moveName << "\n" << std::endl;
 	std::cout << "RESULT : " << GetVersusResult(actionOne, actionTwo) << std::endl;
