@@ -59,6 +59,34 @@ std::string GetVersusResult(PlayerMove playerOneMove, PlayerMove playerTwoMove)
 	return result;
 }
 
+void CheckValidInput()
+{
+	if (std::cin.fail())
+	{
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+}
+
+
+int GetPlayerInput()
+{
+	int input;
+
+	std::cin >> input;
+
+	CheckValidInput();
+
+	while (!(input > 0 && input < 4))
+	{
+		std::cout << "Inputted wrong values, only 1 to 3 is acceptable" << std::endl;
+		std::cin >> input;
+		CheckValidInput();
+	}
+
+	return input;
+}
+
 int main()
 {
 	srand(time(NULL));
@@ -74,21 +102,14 @@ int main()
 	std::cout << "||                                         ||" << std::endl;
 	std::cout << "=============================================" << std::endl;
 
-	int input;
-	std::cin >> input;
-
-	if (!(input > 0 && input < 4))
-	{
-		std::cout << "Inputted wrong values, only 1 to 3 is acceptable" << std::endl;
-		system("pause");
-		return 0;
-	}
+	int input = GetPlayerInput();
+	
 
 	PlayerMove actionOne = GetResult(input);
 	PlayerMove actionTwo = GetResult(GetRandomInteger());
 
 	std::cout << "\n" << actionOne.moveName << " X " << actionTwo.moveName << "\n" << std::endl;
-	std::cout << "RESULT : " << GetVersusResult(actionOne, actionTwo) << std::endl;
+	std::cout << "RESULT : " << GetVersusResult(actionOne, actionTwo) << "\n" << std::endl;
 
 	system("pause");
 	return 0;
