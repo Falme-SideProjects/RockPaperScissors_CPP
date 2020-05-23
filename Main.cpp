@@ -6,37 +6,55 @@ std::string ROCK = "Rock";
 std::string PAPER = "Paper";
 std::string SCISSORS = "Scissors";
 
+class PlayerMove
+{
+	public:
+		std::string moveName;
+		std::string winsAgainst;
+};
+
+
+
 int GetRandomInteger()
 {
 	return (rand() % 3 + 1);
 }
 
-std::string GetRandomResult()
+PlayerMove GetRandomResult()
 {
 	std::string result;
+
+	PlayerMove playerMove;
 
 	switch (GetRandomInteger())
 	{
 		case 1:
-			result = ROCK;
+			playerMove.moveName = ROCK;
+			playerMove.winsAgainst = SCISSORS;
 			break;
 		case 2:
-			result = PAPER;
+			playerMove.moveName = PAPER;
+			playerMove.winsAgainst = ROCK;
 			break;
 		case 3:
-			result = SCISSORS;
+			playerMove.moveName = SCISSORS;
+			playerMove.winsAgainst = PAPER;
 			break;
 	}
 
-	return result;
+	return playerMove;
 }
 
-std::string GetVersusResult(std::string playerOneMove, std::string playerTwoMove)
+std::string GetVersusResult(PlayerMove playerOneMove, PlayerMove playerTwoMove)
 {
 	std::string result = "";
 
-	if (playerOneMove == playerTwoMove) result = "Draw";
-	else result = "Still Not Defined";
+	if (playerOneMove.winsAgainst == playerTwoMove.moveName) 
+		result = "Player One Wins!";
+	else if (playerTwoMove.winsAgainst == playerOneMove.moveName)
+		result = "Player Two Wins!";
+	else 
+		result = "Draw";
 
 	return result;
 }
@@ -46,15 +64,16 @@ int main()
 	srand(time(NULL));
 
 	std::cout << "=============================================" << std::endl;
+	std::cout << "||                                         ||" << std::endl;
 	std::cout << "||          Rock, Paper, Scissors          ||" << std::endl;
+	std::cout << "||                                         ||" << std::endl;
 	std::cout << "=============================================" << std::endl;
 
-	std::string actionOne = GetRandomResult();
-	std::string actionTwo = GetRandomResult();
+	PlayerMove actionOne = GetRandomResult();
+	PlayerMove actionTwo = GetRandomResult();
 
-	std::cout << actionOne << std::endl;
-	std::cout << actionTwo << std::endl;
-	std::cout << GetVersusResult(actionOne, actionTwo) << std::endl;
+	std::cout << "\n" << actionOne.moveName << " X " << actionTwo.moveName << "\n" << std::endl;
+	std::cout << "RESULT : " << GetVersusResult(actionOne, actionTwo) << std::endl;
 
 	system("pause");
 	return 0;
